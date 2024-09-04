@@ -1,4 +1,4 @@
-package ar.edu.unju.fi.poo.constantes;
+package ar.edu.unju.fi.poo.util;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,7 +21,7 @@ public class ImportesConstantes {
     }
 
     private static void leerValoresDesdeArchivo() {
-        String archivo = "src/ar/edu/unju/fi/poo/constantes/valores.txt";
+        String archivo = "src/ar/edu/unju/fi/poo/util/valores.txt";
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
             while ((linea = br.readLine()) != null) {

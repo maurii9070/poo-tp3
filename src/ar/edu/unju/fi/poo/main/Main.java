@@ -1,7 +1,7 @@
 package ar.edu.unju.fi.poo.main;
 
 import ar.edu.unju.fi.poo.manager.EmpresaManager;
-import ar.edu.unju.fi.poo.model.Empleado;
+import ar.edu.unju.fi.poo.dominio.Empleado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,8 +93,8 @@ public class Main {
         System.out.println("2. Mostrar empleados con antiguedad mayor a un valor determinado.");
         System.out.println("3. Mostrar empleados mayores a una edad determinada.");
         System.out.println("4. Ver importe neto de empleados mayores a una edad determinada.");
-        System.out.println("5. Incrementar sueldo basico de empleados por antiguedad menor a un valor determinado.");
-        System.out.println("6. Ver empleados(todos).");
+        System.out.println("5. Incrementar S. Basico de empleados menor o igual a 2 anios.");
+        System.out.println("6. Ver todos los empleados.");
         System.out.println("7. Salir.");
     }
 

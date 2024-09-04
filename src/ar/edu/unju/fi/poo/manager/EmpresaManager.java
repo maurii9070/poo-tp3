@@ -1,12 +1,11 @@
 package ar.edu.unju.fi.poo.manager;
 
-import ar.edu.unju.fi.poo.constantes.ImportesConstantes;
-import ar.edu.unju.fi.poo.model.Administrativo;
-import ar.edu.unju.fi.poo.model.Empleado;
-import ar.edu.unju.fi.poo.model.Profesional;
+import ar.edu.unju.fi.poo.util.ImportesConstantes;
+import ar.edu.unju.fi.poo.dominio.Administrativo;
+import ar.edu.unju.fi.poo.dominio.Empleado;
+import ar.edu.unju.fi.poo.dominio.Profesional;
 
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;

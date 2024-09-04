@@ -1,6 +1,6 @@
-package ar.edu.unju.fi.poo.model;
+package ar.edu.unju.fi.poo.dominio;
 
-import ar.edu.unju.fi.poo.constantes.ImportesConstantes;
+import ar.edu.unju.fi.poo.util.ImportesConstantes;
 
 import java.time.LocalDate;
 
