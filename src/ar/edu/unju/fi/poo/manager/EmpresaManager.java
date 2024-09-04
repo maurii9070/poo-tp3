@@ -7,6 +7,7 @@ import ar.edu.unju.fi.poo.dominio.Profesional;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,13 +17,13 @@ public class EmpresaManager {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_RESET = "\u001B[0m";
 
-    private static int id_aux = 100;
+    private static int idAux = 100;
+    public static List <Empleado> empleados = new ArrayList<>();
 
     /**
      * Genera empleados de prueba
-     * @param empleados se recibe una lista de empleados
      */
-    public static void generarEmpleados(List<Empleado> empleados){
+    public static void generarEmpleados(){
         empleados.add(new Administrativo(1, "A0001", "Juan Perez", 2,
                                          LocalDate.of(1992, 1, 1), 5, 3));
         empleados.add(new Administrativo(2, "A0002", "Juan Carlos", 1,
@@ -63,16 +64,15 @@ public class EmpresaManager {
 
     /**
      * Agrega un empleado a la lista
-     * @param empleados se recibe una lista de empleados
      */
-    public static void agregarEmpleado(List<Empleado> empleados) {
+    public static void agregarEmpleado() {
         String legajo, nombre, tituloStr, tipo;
         int hijos, categoria;
         boolean titulo;
 
         Scanner sc = new Scanner(System.in);
 
-        id_aux += 1;
+        idAux += 1;
 
         do{
             try {
@@ -142,7 +142,7 @@ public class EmpresaManager {
                 // Si tiene titulo, evalua a true, sino a false
                 titulo = tituloStr.equalsIgnoreCase("s");
 
-                Profesional profesional = new Profesional(id_aux, legajo, nombre, hijos, LocalDate.of(anio, mes, dia),
+                Profesional profesional = new Profesional(idAux, legajo, nombre, hijos, LocalDate.of(anio, mes, dia),
                                                           antiguedad, titulo);
                 empleados.add(profesional);
                 System.out.println(ANSI_GREEN+profesional+ANSI_RESET);
@@ -159,7 +159,7 @@ public class EmpresaManager {
                     }
                 } while (categoria < 1 || categoria > 20);
 
-                Administrativo administrativo = new Administrativo(id_aux, legajo, nombre, hijos,
+                Administrativo administrativo = new Administrativo(idAux, legajo, nombre, hijos,
                                                                    LocalDate.of(anio, mes, dia), antiguedad,
                                                                    categoria);
                 empleados.add(administrativo);
@@ -172,10 +172,9 @@ public class EmpresaManager {
 
     /**
      * Muestra los empleados con antiguedad mayor a un valor determinado
-     * @param empleados se recibe una lista de empleados
      * @param antiguedad se recibe la antiguedad a comparar
      */
-    public static void mostrarPorAntiguedadMayorA(List<Empleado> empleados, int antiguedad){
+    public static void mostrarPorAntiguedadMayorA(int antiguedad){
         float remunerativoAcumulado = 0;
         float salarioFamiliarAcumulado = 0;
         float descuentoAcumulado = 0;
@@ -200,25 +199,36 @@ public class EmpresaManager {
 
     /**
      * Muestra los empleados mayores a una edad determinada
-     * @param empleados se recibe una lista de empleados
      * @param edad se recibe la edad a comparar
      */
-    public static void mostrarPorEdadMayoroIgual(List<Empleado> empleados,int edad){
+    public static void mostrarPorEdadMayoroIgual(int edad){
+        float remunerativoAcumulado = 0;
+        float salarioFamiliarAcumulado = 0;
+        float descuentoAcumulado = 0;
+        float importeNetoAcumulado = 0;
         System.out.println(ANSI_GREEN+"Empleados mayores o iguales a " + edad + " años"+ANSI_RESET);
-
-        empleados.forEach(empleado -> {
-            if(empleado.getEdad() >= edad){
-                System.out.println(ANSI_GREEN+empleado + " Edad: " + empleado.getEdad()+ANSI_RESET);
+        for (Empleado empleado : empleados) {
+            if(empleado.getEdad() > edad){
+                System.out.println(ANSI_GREEN + empleado + ANSI_RESET);
+                remunerativoAcumulado += empleado.getRemunerativosBonificables();
+                salarioFamiliarAcumulado += empleado.getSalarioFamiliar();
+                descuentoAcumulado += empleado.calcularDescuento(empleado.getRemunerativosBonificables());
+                importeNetoAcumulado += empleado.getSueldo();
             }
-        });
+        }
+        System.out.println(ANSI_GREEN+"---------------------------------------"+ANSI_RESET);
+        System.out.println(ANSI_GREEN+"Remunerativo acumulado: " + formatearMoneda(remunerativoAcumulado)+ANSI_RESET);
+        System.out.println(ANSI_GREEN+"Salario familiar acumulado: " + formatearMoneda(salarioFamiliarAcumulado)+ANSI_RESET);
+        System.out.println(ANSI_GREEN+"Descuento acumulado: " + formatearMoneda(descuentoAcumulado)+ANSI_RESET);
+        System.out.println(ANSI_GREEN+"Importe neto acumulado: " + formatearMoneda(importeNetoAcumulado)+ANSI_RESET);
+        System.out.println(ANSI_GREEN+"---------------------------------------"+ANSI_RESET);
     }
 
     /**
      * Muestra el importe neto de los empleados mayores a una edad determinada
-     * @param empleados se recibe una lista de empleados
      * @param edad se recibe la edad a comparar
      */
-    public static void verImporteNetoPorEdadMayoroIgual(List<Empleado> empleados, int edad){
+    public static void verImporteNetoPorEdadMayoroIgual(int edad){
         float importeNetoAcumulado = 0;
 
         System.out.println(ANSI_GREEN+"Importe neto de empleados mayores o iguales a " + edad + " años"+ANSI_RESET);
@@ -234,10 +244,9 @@ public class EmpresaManager {
 
     /**
      * Incrementa el sueldo basico de los empleados por antiguedad menor a un valor determinado
-     * @param empleados se recibe una lista de empleados
      * @param antiguedad se recibe la antiguedad a comparar
      */
-    public static void incrementarSueldoBasicoPorAntiguedad(List<Empleado> empleados, int antiguedad){
+    public static void incrementarSueldoBasicoPorAntiguedad(int antiguedad){
         for (Empleado empleado : empleados) {
             if(empleado.getAntiguedad() < antiguedad){
                 // Aumento del 10%
@@ -261,9 +270,8 @@ public class EmpresaManager {
 
     /**
      * Muestra todos los empleados
-     * @param empleados se recibe una lista de empleados
      */
-    public static void mostrarEmpleados(List<Empleado> empleados) {
+    public static void mostrarEmpleados() {
         empleados.forEach(empleado -> System.out.println(ANSI_GREEN+empleado+ANSI_RESET));
     }
 }

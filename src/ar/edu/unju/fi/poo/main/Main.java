@@ -1,10 +1,6 @@
 package ar.edu.unju.fi.poo.main;
 
 import ar.edu.unju.fi.poo.manager.EmpresaManager;
-import ar.edu.unju.fi.poo.dominio.Empleado;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -13,8 +9,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        List<Empleado> empleados = new ArrayList<>();
-        EmpresaManager.generarEmpleados(empleados);
+        EmpresaManager.generarEmpleados();
 
         int opcion;
         do {
@@ -24,7 +19,7 @@ public class Main {
 
             switch (opcion){
                 case 1:
-                    EmpresaManager.agregarEmpleado(empleados);
+                    EmpresaManager.agregarEmpleado();
                     break;
                 case 2:
                     while (true) {
@@ -34,7 +29,7 @@ public class Main {
                             if (antiguedad < 0){
                                 System.out.println("La antiguedad no puede ser negativa.");
                             } else {
-                                EmpresaManager.mostrarPorAntiguedadMayorA(empleados, antiguedad);
+                                EmpresaManager.mostrarPorAntiguedadMayorA(antiguedad);
                                 break;
                             }
                         } catch (NumberFormatException e){
@@ -48,7 +43,7 @@ public class Main {
                             System.out.print("Ingrese la edad: ");
                             int edad = Integer.parseInt(sc.nextLine());
                             if (verificarEdad(edad)) {
-                                EmpresaManager.mostrarPorEdadMayoroIgual(empleados, edad);
+                                EmpresaManager.mostrarPorEdadMayoroIgual(edad);
                                 break;
                             }
                         } catch (NumberFormatException e){
@@ -62,7 +57,7 @@ public class Main {
                             System.out.print("Ingrese la edad: ");
                             int edad = Integer.parseInt(sc.nextLine());
                             if (verificarEdad(edad)) {
-                                EmpresaManager.verImporteNetoPorEdadMayoroIgual(empleados, edad);
+                                EmpresaManager.verImporteNetoPorEdadMayoroIgual(edad);
                                 break;
                             }
                         } catch (NumberFormatException e){
@@ -72,10 +67,10 @@ public class Main {
                     break;
                 case 5:
                     int antiguedadAumento = 2; // 2 anios
-                    EmpresaManager.incrementarSueldoBasicoPorAntiguedad(empleados, antiguedadAumento);
+                    EmpresaManager.incrementarSueldoBasicoPorAntiguedad(antiguedadAumento);
                     break;
                 case 6:
-                    EmpresaManager.mostrarEmpleados(empleados);
+                    EmpresaManager.mostrarEmpleados();
                     break;
                 case 7:
                     System.out.println("Saliendo...");
